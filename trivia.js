@@ -119,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     let currentRound = 0;
     let score = 0;
     let currentGameQuestions = []
+    let currentAnsIndex = null
 
     function shuffleArr(arr){
         for(let i = arr.length-1; i > 0; i--){
@@ -134,9 +135,25 @@ document.addEventListener("DOMContentLoaded", () =>{
         currentRound = 0;
         score = 0;
         
+    }
+
+    function showTriviaQuestions(){
+        const currentQuestion = currentGameQuestions[currentRound];
+
+        triviaQuestion.textContent = currentQuestion.question;
         
 
+        
 
+        const possibleAnswers = [currentQuestion.correct, ...currentQuestion.wrong];
+        shuffleArr(possibleAnswers);
+
+        currentAnsIndex = possibleAnswers.indexOf(currentQuestion.correct);
+
+        answerBtns.forEach((triviaBtn,i) => {
+            triviaBtn.textContent = possibleAnswers[i];
+            
+        });
 
 
     }
