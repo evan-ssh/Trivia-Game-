@@ -117,13 +117,19 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
 
+   
 
-    function shuffleQuestions(questions){
-        for(let i = 0; questions.length - 1; i--){
+    function shuffleArr(arr){
+        for(let i = arr.length-1; i > 0; i--){
             const j = Math.floor(Math.random() * (i+1));
-            [questions[i], questions[j]] = [array[j], array[i]];
+            [arr[i], arr[j]] = [arr[j], arr[i]];
         }
     }
+
+
+    const questions = [...questionPool]
+    shuffleArr(questions)
+    const currentGameQuestions = questions.slice(0,10);
 
 
 
