@@ -13,14 +13,28 @@ document.addEventListener("DOMContentLoaded", () =>{
     const answer2Btn = document.getElementById("answer2");
     const answer3Btn = document.getElementById("answer3");
     const answer4Btn = document.getElementById("answer4");
+    const answerBtns = [answer1Btn,answer2Btn,answer3Btn,answer4Btn];
     const triviaImg = document.getElementById("catImg");
     const triviaQuestion = document.getElementById("question");
     const userScore = document.getElementById("userScore");
     const playAgainBtn = document.getElementById("playAgain");
     const returnMenuBtn = document.getElementById("returnMenu");
 
+    const addQForm = document.getElementById("addQForm");
+    const addQuestionInput = document.getElementById("addQuestion");
+    const trueAns = document.getElementById("trueAns");
+    const falseAns1 = document.getElementById("falseAns1");
+    const falseAns2 = document.getElementById("falseAns2");
+    const falseAns3 = document.getElementById("falseAns3");
 
-    const answerBtns = [answer1Btn,answer2Btn,answer3Btn,answer4Btn];
+    const addQFields = [addQuestionInput, trueAns, falseAns1, falseAns2, falseAns3];
+        addQFields.forEach(field =>{
+            const span = document.createElement("span")
+            span.textContent = "";
+            field.insertAdjacentElement("afterend", span);
+        })
+    
+    
 
     const questionPool = [
         {
@@ -203,8 +217,64 @@ document.addEventListener("DOMContentLoaded", () =>{
                 results.style.display = "block";
                 userScore.textContent = `${score} / ${currentGameQuestions.length}`;
             }
-
-
         })
     })
+
+    addQForm.addEventListener("submit", (e) =>{
+        e.preventDefault();
+
+        let valid = true;
+        
+        
+        
+        
+        addQFields.forEach(field =>{
+            const span = field.nextElementSibling;
+            if(span){
+                span.textContent = "";
+            }
+        });
+
+        const newQuestion = addQuestionInput.value.trim()
+        const correctAns = trueAns.value.trim();
+        const false1 = falseAns1.value.trim();
+        const false2 = falseAns2.value.trim();
+        const false3 = falseAns3.value.trim();
+        
+        if(!newQuestion){
+            valid = false;
+            addQuestionInput.nextElementSibling.textContent = "A question must be entered.";
+        }
+
+        if(!correctAns){
+            valid = false;
+            trueAns.nextElementSibling.textContent = "You must have an answer.";
+        }
+
+        if(!false1 || !false2 || !false3){
+            valid = false;
+            falseAns1.nextElementSibling.textContent = "Please provide all false answers";
+        }
+
+        if(!valid){
+            return;
+        }
+
+        const userQuestion = {
+            question:newQuestion,
+            correct:correctAns,
+            wrong:[false1,false2,false3],
+            img: null
+        }
+
+        questionPool.push(userQuestion);
+
+        addQForm.reset();
+
+        addQuestionScreen.style.display = "none";
+        homeScreen.style.display = "block";
+
+    })
+
+
 })
