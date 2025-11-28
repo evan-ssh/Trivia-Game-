@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     const homeScreen = document.getElementById("home");
     const addQuestionScreen = document.getElementById("addQ")
     const triviaScreen = document.getElementById("trivia");
+    const triviaRound = document.getElementById("roundP")
     const results = document.getElementById("results");
     const cancelQuestionBtn = document.getElementById("cancelAdd");
     const answer1Btn = document.getElementById("answer1");
@@ -14,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () =>{
     const answer4Btn = document.getElementById("answer4");
     const triviaImg = document.getElementById("catImg");
     const triviaQuestion = document.getElementById("question");
+    const userScore = document.getElementById("userScore");
+    const playAgainBtn = document.getElementById("playAgain");
+    const returnMenuBtn = document.getElementById("returnMenu");
 
 
     const answerBtns = [answer1Btn,answer2Btn,answer3Btn,answer4Btn];
@@ -139,7 +143,9 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     function showTriviaQuestions(){
         const currentQuestion = currentGameQuestions[currentRound];
+        triviaRound.textContent =`Question ${currentRound + 1} / ${currentGameQuestions.length}`
         triviaQuestion.textContent = currentQuestion.question;
+        triviaImg.src = currentQuestion.img
         const possibleAnswers = [currentQuestion.correct, ...currentQuestion.wrong];
         shuffleArr(possibleAnswers);
         currentAnsIndex = possibleAnswers.indexOf(currentQuestion.correct);
@@ -170,6 +176,19 @@ document.addEventListener("DOMContentLoaded", () =>{
         
     })
 
+    playAgainBtn.addEventListener("click", () => {
+        results.style.display = "none";
+        triviaScreen.style.display = "block";
+        startTrivia();
+        showTriviaQuestions()
+
+    })
+
+    returnMenuBtn.addEventListener("click", () => {
+        results.style.display = "none";
+        homeScreen.style.display = "block";
+    })
+
     answerBtns.forEach((Btn,i) =>{
         Btn.addEventListener("click", () =>{
             if(i === currentAnsIndex){
@@ -182,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () =>{
             }else{
                 triviaScreen.style.display = "none";
                 results.style.display = "block";
+                userScore.textContent = `${score} / ${currentGameQuestions.length}`;
             }
 
 
