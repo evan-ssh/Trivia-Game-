@@ -115,9 +115,10 @@ document.addEventListener("DOMContentLoaded", () =>{
         }
     ];
 
-
-
-   
+    
+    let currentRound = 0;
+    let score = 0;
+    let currentGameQuestions = []
 
     function shuffleArr(arr){
         for(let i = arr.length-1; i > 0; i--){
@@ -126,10 +127,20 @@ document.addEventListener("DOMContentLoaded", () =>{
         }
     }
 
+    function startTrivia(){
+        const questions = [...questionPool];
+        shuffleArr(questions)
+        currentGameQuestions = questions.slice(0,10);
+        currentRound = 0;
+        score = 0;
+        
+        
 
-    const questions = [...questionPool]
-    shuffleArr(questions)
-    const currentGameQuestions = questions.slice(0,10);
+
+
+
+    }
+    
 
 
 
