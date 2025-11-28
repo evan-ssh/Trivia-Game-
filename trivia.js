@@ -11,7 +11,12 @@ document.addEventListener("DOMContentLoaded", () =>{
     const answer1Btn = document.getElementById("answer1");
     const answer2Btn = document.getElementById("answer2");
     const answer3Btn = document.getElementById("answer3");
-    const answer4Btn = document.getElementById("answer4")
+    const answer4Btn = document.getElementById("answer4");
+    const triviaImg = document.getElementById("catImg");
+    const triviaQuestion = document.getElementById("question");
+
+
+    const answerBtns = [answer1Btn,answer2Btn,answer3Btn,answer4Btn];
 
     const questionPool = [
         {
@@ -109,6 +114,19 @@ document.addEventListener("DOMContentLoaded", () =>{
             img: "images/cat15.jpg"
         }
     ];
+
+
+
+
+    function shuffleQuestions(questions){
+        for(let i = 0; questions.length - 1; i--){
+            const j = Math.floor(Math.random() * (i+1));
+            [questions[i], questions[j]] = [array[j], array[i]];
+        }
+    }
+
+
+
     playBtn.addEventListener("click", () =>  {
         homeScreen.style.display = "none";
         triviaScreen.style.display = "block";
