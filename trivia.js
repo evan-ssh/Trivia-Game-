@@ -139,23 +139,13 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     function showTriviaQuestions(){
         const currentQuestion = currentGameQuestions[currentRound];
-
         triviaQuestion.textContent = currentQuestion.question;
-        
-
-        
-
         const possibleAnswers = [currentQuestion.correct, ...currentQuestion.wrong];
         shuffleArr(possibleAnswers);
-
         currentAnsIndex = possibleAnswers.indexOf(currentQuestion.correct);
-
         answerBtns.forEach((triviaBtn,i) => {
             triviaBtn.textContent = possibleAnswers[i];
-            
         });
-
-
     }
     
 
@@ -165,6 +155,8 @@ document.addEventListener("DOMContentLoaded", () =>{
         homeScreen.style.display = "none";
         triviaScreen.style.display = "block";
         
+        startTrivia();
+        showTriviaQuestions();
     })
 
     addBtn.addEventListener("click", () =>  {
@@ -176,5 +168,23 @@ document.addEventListener("DOMContentLoaded", () =>{
         homeScreen.style.display = "block";
         addQuestionScreen.style.display = "none";
         
+    })
+
+    answerBtns.forEach((Btn,i) =>{
+        Btn.addEventListener("click", () =>{
+            if(i === currentAnsIndex){
+                score++;
+            }
+            currentRound ++
+
+            if(currentRound < currentGameQuestions.length){
+                showTriviaQuestions()
+            }else{
+                triviaScreen.style.display = "none";
+                results.style.display = "block";
+            }
+
+
+        })
     })
 })
