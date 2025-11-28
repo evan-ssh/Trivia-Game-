@@ -1,0 +1,15 @@
+#home{
+    display: block;
+}
+
+#addQ{
+    display: none;
+}
+
+#trivia{
+    display: none;
+}
+
+#results{
+    display: none;
+}
