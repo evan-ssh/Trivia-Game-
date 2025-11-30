@@ -27,7 +27,9 @@ document.addEventListener("DOMContentLoaded", () =>{
     const falseAns2 = document.getElementById("falseAns2");
     const falseAns3 = document.getElementById("falseAns3");
 
-    const medalImg = document.getElementById("medalImg")
+    const medalImg = document.getElementById("medalImg");
+    const timeModeBtn = document.getElementById("timeModeBtn");
+    const roundTimeDisplay = document.getElementById("roundTime");
 
     const addQFields = [addQuestionInput, trueAns, falseAns1, falseAns2, falseAns3];
         addQFields.forEach(field =>{
@@ -140,6 +142,9 @@ document.addEventListener("DOMContentLoaded", () =>{
     let score = 0;
     let currentGameQuestions = []
     let currentAnsIndex = null
+    let timedMode = false
+    let timerId = null;
+    let timeLeft = 10;
 
     function shuffleArr(arr){
         for(let i = arr.length-1; i > 0; i--){
@@ -148,12 +153,14 @@ document.addEventListener("DOMContentLoaded", () =>{
         }
     }
 
-    function startTrivia(){
+    function startTrivia(mode){
         const questions = [...questionPool];
         shuffleArr(questions)
         currentGameQuestions = questions.slice(0,10);
         currentRound = 0;
         score = 0;
+
+        timedMode = mode;
         
     }
 
@@ -168,8 +175,48 @@ document.addEventListener("DOMContentLoaded", () =>{
         answerBtns.forEach((triviaBtn,i) => {
             triviaBtn.textContent = possibleAnswers[i];
         });
+
+        if(timedMode){
+            roundTimeDisplay.style.display = "block";
+            startTime();
+        } else{
+            clearInterval(timerId);
+            roundTimeDisplay.style.display ="none";
+        }
     }
     
+
+    function startTime(){
+        clearInterval(timerId);
+        
+        timeLeft = 10;
+        roundTimeDisplay.textContent = `Time: ${timeLeft}s`
+
+
+        timerId = setInterval(() =>{
+            timeLeft--;
+            roundTimeDisplay.textContent = `Time: ${timeLeft}s`
+
+            if(timeLeft <= 0){
+                clearInterval(timerId);
+                currentRound++;
+                if (currentRound < currentGameQuestions.length) {
+                    showTriviaQuestions();
+                } else {
+                    triviaScreen.style.display = "none";
+                    results.style.display = "block";
+                    roundTimeDisplay.style.display = "none";
+                    userScore.textContent = `${score} / ${currentGameQuestions.length}`;
+                    if (score <= 3) {
+                        medalImg.src = "medals/bronzemedal.png";
+                    } else if (score <= 7) {
+                        medalImg.src = "medals/silvermedal.png";
+                    } else {
+                        medalImg.src = "medals/goldmedal.png";}
+                    }
+                }
+            },1000);
+        }
 
 
 
@@ -177,7 +224,15 @@ document.addEventListener("DOMContentLoaded", () =>{
         homeScreen.style.display = "none";
         triviaScreen.style.display = "block";
         
-        startTrivia();
+        startTrivia(false);
+        showTriviaQuestions();
+    })
+
+    timeModeBtn.addEventListener("click", () =>{
+        homeScreen.style.display = "none";
+        triviaScreen.style.display = "block";
+
+        startTrivia(true);
         showTriviaQuestions();
     })
 
@@ -195,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     playAgainBtn.addEventListener("click", () => {
         results.style.display = "none";
         triviaScreen.style.display = "block";
-        startTrivia();
+        startTrivia(timedMode);
         showTriviaQuestions()
 
     })
@@ -207,6 +262,9 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     answerBtns.forEach((Btn,i) =>{
         Btn.addEventListener("click", () =>{
+
+            clearInterval(timerId)
+
             if(i === currentAnsIndex){
                 score++;
             }
