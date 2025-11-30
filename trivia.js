@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () =>{
     const falseAns2 = document.getElementById("falseAns2");
     const falseAns3 = document.getElementById("falseAns3");
 
+    const medalImg = document.getElementById("medalImg")
+
     const addQFields = [addQuestionInput, trueAns, falseAns1, falseAns2, falseAns3];
         addQFields.forEach(field =>{
             const span = document.createElement("span")
@@ -80,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () =>{
             img: "images/cat7.jpg"
         },
         {
-            question: "What is the main prupose a cat's tail serves?",
+            question: "What is the main purpose a cat's tail serves?",
             correct: "Helping with balance and communication",
             wrong: [
                 "Storing extra food",
@@ -216,6 +218,13 @@ document.addEventListener("DOMContentLoaded", () =>{
                 triviaScreen.style.display = "none";
                 results.style.display = "block";
                 userScore.textContent = `${score} / ${currentGameQuestions.length}`;
+                if (score <= 3) {
+                    medalImg.src = "medals/bronzemedal.png";
+                } else if (score <= 7) {
+                    medalImg.src = "medals/silvermedal.png";
+                } else {
+                    medalImg.src = "medals/goldmedal.png";
+                }
             }
         })
     })
