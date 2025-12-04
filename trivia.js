@@ -247,11 +247,11 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     addBtn.addEventListener("click", () =>  {
         homeScreen.style.display = "none";
-        addQuestionScreen.style.display = "block";        
+        addQuestionScreen.style.display = "flex";        
     })
 
     cancelQuestionBtn.addEventListener("click", () =>  {
-        homeScreen.style.display = "block";
+        homeScreen.style.display = "flex";
         addQuestionScreen.style.display = "none";
         
     })
@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
     returnMenuBtn.addEventListener("click", () => {
         results.style.display = "none";
-        homeScreen.style.display = "block";
+        homeScreen.style.display = "flex";
     })
 
     answerBtns.forEach((Btn,i) =>{
@@ -284,13 +284,16 @@ document.addEventListener("DOMContentLoaded", () =>{
             }else{
                 triviaScreen.style.display = "none";
                 results.style.display = "block";
-                userScore.textContent = `${score} / ${currentGameQuestions.length}`;
+                
                 if (score <= 3) {
                     medalImg.src = "medals/bronzemedal.png";
+                    userScore.textContent = `You answered ${score} / ${currentGameQuestions.length} questions correctly. Winning a bronze medal!`;
                 } else if (score <= 7) {
                     medalImg.src = "medals/silvermedal.png";
+                    userScore.textContent = `You answered ${score} / ${currentGameQuestions.length} questions correctly. Winning a silver medal!`;
                 } else {
                     medalImg.src = "medals/goldmedal.png";
+                    userScore.textContent = `You answered ${score} / ${currentGameQuestions.length} questions correctly. Winning a gold medal!`;
                 }
             }
         })
@@ -340,7 +343,6 @@ document.addEventListener("DOMContentLoaded", () =>{
             question:newQuestion,
             correct:correctAns,
             wrong:[false1,false2,false3],
-            img: null
         }
 
         questionPool.push(userQuestion);
@@ -348,7 +350,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         addQForm.reset();
 
         addQuestionScreen.style.display = "none";
-        homeScreen.style.display = "block";
+        homeScreen.style.display = "flex";
 
     })
 
