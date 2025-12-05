@@ -210,6 +210,23 @@ document.addEventListener("DOMContentLoaded", () =>{
     }
     
 
+    function displayScreen(currentScreen){
+        homeScreen.style.display = "none";
+        addQuestionScreen.style.display = "none";
+        triviaScreen.style.display = "none";
+        results.style.display = "none";
+
+        if(currentScreen === "home"){
+            homeScreen.style.display = "flex";
+        }else if (currentScreen === "addQ"){
+            addQuestionScreen.style.display = "flex";
+        }else if(currentScreen === "trivia"){
+            triviaScreen.style.display = "block";
+        }else if(currentScreen === "results"){
+            results.style.display = "block"
+        }
+    }
+
     function startTime(){
         clearInterval(timerId);
         
@@ -227,9 +244,7 @@ document.addEventListener("DOMContentLoaded", () =>{
                 if (currentRound < currentGameQuestions.length) {
                     showTriviaQuestions();
                 } else {
-                    triviaScreen.style.display = "none";
-                    results.style.display = "block";
-                    roundTimeDisplay.style.display = "none";
+                    displayScreen("results")
                     showMedals()
                     }
                 }
@@ -239,44 +254,37 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
     playBtn.addEventListener("click", () =>  {
-        homeScreen.style.display = "none";
-        triviaScreen.style.display = "block";
         
+        displayScreen("trivia");
         startTrivia(false);
         showTriviaQuestions();
-    })
+    });
 
     timeModeBtn.addEventListener("click", () =>{
-        homeScreen.style.display = "none";
-        triviaScreen.style.display = "block";
-
+        
+        displayScreen("trivia");
         startTrivia(true);
         showTriviaQuestions();
-    })
+    });
 
     addBtn.addEventListener("click", () =>  {
-        homeScreen.style.display = "none";
-        addQuestionScreen.style.display = "flex";        
-    })
+        displayScreen("addQ");
+    });
 
     cancelQuestionBtn.addEventListener("click", () =>  {
-        homeScreen.style.display = "flex";
-        addQuestionScreen.style.display = "none";
-        
-    })
+        displayScreen("home");
+    });
 
     playAgainBtn.addEventListener("click", () => {
-        results.style.display = "none";
-        triviaScreen.style.display = "block";
+        displayScreen("trivia");
         startTrivia(timedMode);
-        showTriviaQuestions()
+        showTriviaQuestions();
 
-    })
+    });
 
     returnMenuBtn.addEventListener("click", () => {
-        results.style.display = "none";
-        homeScreen.style.display = "flex";
-    })
+        displayScreen("home");
+    });
 
     answerBtns.forEach((Btn,i) =>{
         Btn.addEventListener("click", () =>{
@@ -291,8 +299,7 @@ document.addEventListener("DOMContentLoaded", () =>{
             if(currentRound < currentGameQuestions.length){
                 showTriviaQuestions()
             }else{
-                triviaScreen.style.display = "none";
-                results.style.display = "block";
+                displayScreen("results")
                 showMedals(score)
             }
         })
@@ -302,10 +309,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         e.preventDefault();
 
         let valid = true;
-        
-        
-        
-        
+
         addQFields.forEach(field =>{
             const span = field.nextElementSibling;
             if(span){
@@ -348,8 +352,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
         addQForm.reset();
 
-        addQuestionScreen.style.display = "none";
-        homeScreen.style.display = "flex";
+        displayScreen("home");
 
     })
 
