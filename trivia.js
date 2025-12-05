@@ -193,6 +193,21 @@ document.addEventListener("DOMContentLoaded", () =>{
             roundTimeDisplay.style.display ="none";
         }
     }
+
+    function showMedals(){
+        const totalQuestions = currentGameQuestions.length
+        if (score <= 3) {
+            userScore.textContent = `${score} / ${totalQuestions}`;
+            medalImg.src = "medals/bronzemedal.png";
+            userScore.textContent = `You answered ${score} / ${totalQuestions} questions correctly. Winning a bronze medal!`;
+        } else if (score <= 7) {
+            medalImg.src = "medals/silvermedal.png";
+            userScore.textContent = `You answered ${score} / ${totalQuestions} questions correctly. Winning a silver medal!`;
+        } else {
+            medalImg.src = "medals/goldmedal.png";
+            userScore.textContent = `You answered ${score} / ${totalQuestions} questions correctly. Winning a gold medal!`;
+        }
+    }
     
 
     function startTime(){
@@ -215,13 +230,7 @@ document.addEventListener("DOMContentLoaded", () =>{
                     triviaScreen.style.display = "none";
                     results.style.display = "block";
                     roundTimeDisplay.style.display = "none";
-                    userScore.textContent = `${score} / ${currentGameQuestions.length}`;
-                    if (score <= 3) {
-                        medalImg.src = "medals/bronzemedal.png";
-                    } else if (score <= 7) {
-                        medalImg.src = "medals/silvermedal.png";
-                    } else {
-                        medalImg.src = "medals/goldmedal.png";}
+                    showMedals()
                     }
                 }
             },1000);
@@ -284,17 +293,7 @@ document.addEventListener("DOMContentLoaded", () =>{
             }else{
                 triviaScreen.style.display = "none";
                 results.style.display = "block";
-                
-                if (score <= 3) {
-                    medalImg.src = "medals/bronzemedal.png";
-                    userScore.textContent = `You answered ${score} / ${currentGameQuestions.length} questions correctly. Winning a bronze medal!`;
-                } else if (score <= 7) {
-                    medalImg.src = "medals/silvermedal.png";
-                    userScore.textContent = `You answered ${score} / ${currentGameQuestions.length} questions correctly. Winning a silver medal!`;
-                } else {
-                    medalImg.src = "medals/goldmedal.png";
-                    userScore.textContent = `You answered ${score} / ${currentGameQuestions.length} questions correctly. Winning a gold medal!`;
-                }
+                showMedals(score)
             }
         })
     })
