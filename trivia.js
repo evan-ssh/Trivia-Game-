@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () =>{
                 showTriviaQuestions()
             }else{
                 displayScreen("results")
-                showMedals(score)
+                showMedals()
             }
         })
     })
